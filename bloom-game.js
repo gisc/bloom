@@ -39,6 +39,13 @@ let locked = false
 
 function randomItem(arr) { return arr[Math.floor(Math.random() * arr.length)] }
 
+const nonObservable = new Set([
+  'how','what','when','where','which','who','why','purpose','assumption','cause and effect','conclusion','distinction','function','motive','relationships','theme','original','solution','suppose','happen','bad','good','criteria','effective','importance','opinion','award','grade','mark','perceive'
+])
+
+function isObservableVerb(v) { return !nonObservable.has(String(v).toLowerCase()) }
+function getFiltered(level) { return bloomLevels[level].filter(isObservableVerb) }
+
 function resetUI() {
   verbBox.classList.remove('correct','wrong')
   buttons.forEach(b => { b.classList.remove('correct','wrong'); b.disabled = false })
@@ -48,7 +55,8 @@ function resetUI() {
 function nextVerb() {
   resetUI()
   currentLevel = randomItem([1,2,3,4,5,6])
-  currentVerb = randomItem(bloomLevels[currentLevel])
+  const pool = getFiltered(currentLevel)
+  currentVerb = randomItem(pool.length ? pool : bloomLevels[currentLevel])
   verbBox.textContent = currentVerb
   levelListEl.innerHTML = ''
 }
@@ -58,7 +66,8 @@ function escapeHtml(str) {
 }
 
 function renderLevelList(level) {
-  const verbs = bloomLevels[level]
+  const verbsRaw = getFiltered(level)
+  const verbs = verbsRaw.length ? verbsRaw : bloomLevels[level]
   const rendered = verbs.map(v => v === currentVerb ? `<span class="current-verb">${escapeHtml(v)}</span>` : escapeHtml(v)).join(', ')
   levelListEl.innerHTML = `<span class="level-title">Level ${level}:</span> ${rendered}`
 }
