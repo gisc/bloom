@@ -87,7 +87,8 @@ function escapeHtml(str) {
 function renderLevelList(level) {
   const verbsRaw = getFiltered(level)
   const verbs = verbsRaw.length ? verbsRaw : bloomLevels[level]
-  const rendered = verbs.map(v => v === currentVerb ? `<span class="current-verb">${escapeHtml(v)}</span>` : escapeHtml(v)).join(', ')
+  const sorted = [...verbs].sort((a,b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+  const rendered = sorted.map(v => v === currentVerb ? `<span class="current-verb">${escapeHtml(v)}</span>` : escapeHtml(v)).join(', ')
   levelListEl.innerHTML = `<span class="level-title">Level ${level}:</span> ${rendered}`
 }
 
