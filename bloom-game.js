@@ -40,11 +40,30 @@ let locked = false
 function randomItem(arr) { return arr[Math.floor(Math.random() * arr.length)] }
 
 const nonObservable = new Set([
-  'how','what','when','where','which','who','why','purpose','assumption','cause and effect','conclusion','distinction','function','motive','relationships','theme','original','solution','suppose','happen','bad','good','criteria','effective','importance','opinion','award','grade','mark','perceive'
+  'how','what','when','where','which','who','why','purpose','cause and effect','conclusion','distinction','function','motive','relationships','theme','original','solution','suppose','happen','bad','good','criteria','effective','importance','opinion','award','grade','mark','perceive'
+])
+
+const normalizeMap = new Map([
+  ['breakdown','break down'],
+  ['role play','role‑play'],
+  ['make use of','use'],
+  ['give examples','provide examples'],
+  ['point out','identify'],
+  ['take part in','participate'],
+  ['add to','add'],
+  ['make up','create'],
+  ['rule on','decide']
 ])
 
 function isObservableVerb(v) { return !nonObservable.has(String(v).toLowerCase()) }
-function getFiltered(level) { return bloomLevels[level].filter(isObservableVerb) }
+function normalizeVerb(v) { const k = String(v).toLowerCase(); return normalizeMap.get(k) || v }
+function getFiltered(level) {
+  const items = bloomLevels[level]
+    .filter(isObservableVerb)
+    .map(normalizeVerb)
+  const seen = new Set()
+  return items.filter(x => { const key = String(x).toLowerCase(); if (seen.has(key)) return false; seen.add(key); return true })
+}
 
 function resetUI() {
   verbBox.classList.remove('correct','wrong')
