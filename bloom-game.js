@@ -25,12 +25,12 @@ const anotherBtn = document.getElementById('anotherBtn')
 const levelListEl = document.getElementById('levelList')
 
 const levelTooltips = {
-  1: `Level 1:\nKnowledge: Recall /regurgitate facts without understanding. Exhibits previously e ead learned material by recalling focts, terms basic concents gnd answer.`,
-  2: `Level 2:\nComprehension: To show understanding finding information from the text. Demonstrating\nbasic understanding of facts and ideas.`,
-  3: `Level 3:\nTo use in a new situation. Solving\nproblems by applying acquired knowl.\nedge, facts, techniques and rules in a\ndifferent way.`,
-  4: `Level 4:\nAnalysis: o examine in detail. Examining\nand breaking information information into into parts by\nIdentifying motives oror causes; making\ninferences and finding evidence to sup\nport generalisations.`,
-  5: `Level 5:\nSynthesis: To change or create into something new. Compiling information together in a different way by combining elements in a new pattern or proposing alternative solutions.`,
-  6: `Level 6:\nEvaluation\nTo justify. Presenting and defending opinions by making judgements about information, validity of ideas or quality of work based on a set of criteria.`
+  1: `Knowledge: Recall/regurgitate facts without understanding. Exhibits previously learned material by recalling focts, terms, basic concepts and answers.`,
+  2: `Comprehension: To show understanding finding information from the text. Demonstrating basic understanding of facts and ideas.`,
+  3: `To use in a new situation. Solving problems by applying acquired knowledge, facts, techniques and rules in a different way.`,
+  4: `Analysis: To examine in detail. Examining and breaking information into parts by identifying motives or causes; making inferences and finding evidence to support generalisations.`,
+  5: `Synthesis: To change or create into something new. Compiling information together in a different way by combining elements in a new pattern or proposing alternative solutions.`,
+  6: `Evaluation: To justify. Presenting and defending opinions by making judgements about information, validity of ideas or quality of work based on a set of criteria.`
 }
 
 let currentVerb = null
