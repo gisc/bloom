@@ -22,6 +22,7 @@ const bloomLevels = {
 const verbBox = document.getElementById('verbBox')
 const buttons = Array.from(document.querySelectorAll('.level-btn'))
 const anotherBtn = document.getElementById('anotherBtn')
+const levelListEl = document.getElementById('levelList')
 
 let currentVerb = null
 let currentLevel = null
@@ -40,6 +41,17 @@ function nextVerb() {
   currentLevel = randomItem([1,2,3,4,5,6])
   currentVerb = randomItem(bloomLevels[currentLevel])
   verbBox.textContent = currentVerb
+  levelListEl.innerHTML = ''
+}
+
+function escapeHtml(str) {
+  return str.replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[s]))
+}
+
+function renderLevelList(level) {
+  const verbs = bloomLevels[level]
+  const rendered = verbs.map(v => v === currentVerb ? `<span class="current-verb">${escapeHtml(v)}</span>` : escapeHtml(v)).join(', ')
+  levelListEl.innerHTML = `<span class="level-title">Level ${level}:</span> ${rendered}`
 }
 
 function handleChoice(level) {
@@ -47,6 +59,7 @@ function handleChoice(level) {
   locked = true
   const correctBtn = buttons.find(b => Number(b.dataset.level) === currentLevel)
   const clickedBtn = buttons.find(b => Number(b.dataset.level) === level)
+  renderLevelList(currentLevel)
   if (level === currentLevel) {
     verbBox.classList.add('correct')
     correctBtn.classList.add('correct')
