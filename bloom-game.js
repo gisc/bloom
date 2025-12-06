@@ -86,9 +86,15 @@ function escapeHtml(str) {
 
 function renderLevelList(level) {
   const verbsRaw = getFiltered(level)
-  const verbs = verbsRaw.length ? verbsRaw : bloomLevels[level]
-  const sorted = [...verbs].sort((a,b) => a.toLowerCase().localeCompare(b.toLowerCase()))
-  const rendered = sorted.map(v => v === currentVerb ? `<span class="current-verb">${escapeHtml(v)}</span>` : escapeHtml(v)).join(', ')
+  const base = verbsRaw.length ? verbsRaw : bloomLevels[level].map(normalizeVerb)
+  const sorted = [...base].sort((a,b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+  const normCurrent = normalizeVerb(currentVerb).toLowerCase()
+  function toSentence(s) { const t = String(s).toLowerCase(); return t.charAt(0).toUpperCase() + t.slice(1) }
+  const rendered = sorted.map(v => {
+    const isCurrent = normalizeVerb(v).toLowerCase() === normCurrent
+    const text = toSentence(v)
+    return isCurrent ? `<span class="current-verb">${escapeHtml(text)}</span>` : escapeHtml(text)
+  }).join(', ')
   levelListEl.innerHTML = `<span class="level-title">Level ${level}:</span> ${rendered}`
 }
 
