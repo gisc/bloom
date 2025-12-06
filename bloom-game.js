@@ -24,6 +24,15 @@ const buttons = Array.from(document.querySelectorAll('.level-btn'))
 const anotherBtn = document.getElementById('anotherBtn')
 const levelListEl = document.getElementById('levelList')
 
+const levelTooltips = {
+  1: `Level 1:\nKnowledge: Recall /regurgitate facts without understanding. Exhibits previously e ead learned material by recalling focts, terms basic concents gnd answer.`,
+  2: `Level 2:\nComprehension: To show understanding finding information from the text. Demonstrating\nbasic understanding of facts and ideas.`,
+  3: `Level 3:\nTo use in a new situation. Solving\nproblems by applying acquired knowl.\nedge, facts, techniques and rules in a\ndifferent way.`,
+  4: `Level 4:\nAnalysis: o examine in detail. Examining\nand breaking information information into into parts by\nIdentifying motives oror causes; making\ninferences and finding evidence to sup\nport generalisations.`,
+  5: `Level 5:\nSynthesis: To change or create into something new. Compiling information together in a different way by combining elements in a new pattern or proposing alternative solutions.`,
+  6: `Level 6:\nEvaluation\nTo justify. Presenting and defending opinions by making judgements about information, validity of ideas or quality of work based on a set of criteria.`
+}
+
 let currentVerb = null
 let currentLevel = null
 let locked = false
@@ -73,5 +82,7 @@ function handleChoice(level) {
 
 buttons.forEach(b => b.addEventListener('click', () => handleChoice(Number(b.dataset.level))))
 anotherBtn.addEventListener('click', nextVerb)
+
+buttons.forEach(b => { const lvl = Number(b.dataset.level); b.title = levelTooltips[lvl] })
 
 nextVerb()
